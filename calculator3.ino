@@ -72,7 +72,7 @@ void loop()
       trellis.writeDisplay();
     }
   }
-  
+  //Dave's testing git
    if (MODE == LATCHING) 
    {
     if (trellis.readSwitches()) 
