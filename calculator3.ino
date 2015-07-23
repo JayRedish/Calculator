@@ -4,7 +4,7 @@ LiquidCrystal lcd(12,11,5,4,3,2);
 #include "Adafruit_Trellis.h"
 #define MOMENTARY 0
 #define LATCHING 1
-#define MODE MOMENTARY 
+#define MODE 1 
 Adafruit_Trellis matrix0 = Adafruit_Trellis();
 Adafruit_TrellisSet trellis =  Adafruit_TrellisSet(&matrix0);
 #define NUMTRELLIS 1
@@ -12,6 +12,7 @@ Adafruit_TrellisSet trellis =  Adafruit_TrellisSet(&matrix0);
 #define INTPIN A2
 void setup() 
 {
+  int Currentnumber=0;
   Serial.begin(9600);
   Serial.println("Trellis Demo");
   pinMode(INTPIN, INPUT);
@@ -48,8 +49,7 @@ void loop()
   Serial.println("4");
   
   if (MODE == MOMENTARY) 
-  {  Serial.println("5");
-
+  {
     if (trellis.readSwitches()) 
     {  Serial.println("6");
       int i=0;
@@ -57,22 +57,17 @@ void loop()
       {
 	if (trellis.justPressed(i)) 
         {
-	  Serial.print("v"); Serial.println(i);
-          lcd.print("Hello World");
-          delay(1000);
-          lcd.clear();
 	  trellis.setLED(i);
-	} 
+	      } 
 	if (trellis.justReleased(i)) 
-        {
+         {
 	  Serial.print("^"); Serial.println(i);
 	  trellis.clrLED(i);
-	}
-      }
+	       }
+        }
       trellis.writeDisplay();
     }
   }
-  //Dave's testing git
    if (MODE == LATCHING) 
    {
     if (trellis.readSwitches()) 
@@ -82,10 +77,21 @@ void loop()
       {
 	if (trellis.justPressed(i)) 
         {
+          Serial.print("v"); Serial.println(i);
+        int Currentnumber=i;
+          lcd.print(Currentnumber);
 	  Serial.print("v"); Serial.println(i);
 	  if (trellis.isLED(i))
           {
 	    trellis.clrLED(i);
+  if (trellis.justPressed(i)) 
+        {
+      lcd.clear();
+     if (trellis.isLED(i))
+          {
+      trellis.clrLED(i);
+          }
+        }  
           }
 	  else
           {
